@@ -1,0 +1,145 @@
+ad-hoc_commands:
+ansible all -i hosts - u vagrant -m ping: pinging hosts, -u (user), -I (inventory), -m (module) 
+
+ansible all -i hosts -u vagrant -m setup: getting facts; 
+-important part about machine: ansible_distribution 
+
+ansible webservers -i hosts -u vagrant -m yum -a “name=httpd state=present” -b: 
+	•	-m: yum module (update) 
+	•	-a: augment 
+	•	“name=httpd state=present”: apache package
+	⁃	state=absent: remove a package 
+	•	-b: escalate to (root) permission (from vagrant)
+
+
+Variable precedence: 
+	1.	Extra vars
+	2.	task vars (only for the task)
+	3.	Block vars (only for tasks in the block)
+	4.	Role and include vars
+	5.	Play vars_files
+	6.	Play vars_prompt
+	7.	Play vars
+	8.	Set_facts
+	9.	Registered vars
+	10.	Host facts
+	11.	Playbook host_vars
+	12.	Playbook group_vars
+	13.	Inventory host_vars
+	14.	Inventory group_bars
+	15.	Inventory vars 
+	16.	Role defaults 
+
+Variables: 
+	1.	file: a directory should exist 
+	2.	yum: a package should be installed
+	3.	service: a service should be running
+	4.	template: render a config file from a template
+	5.	get_url: Fetch an archive file from a URL 
+	6.	git: clone a source code repository 
+
+Ex: 
+tasks: 
+   -  name: install nginx
+      yum: 
+	name: nginx
+	state: latest 
+
+Handler Tasks: special tasks that run at the end of a play if notified by another task. If a configuration
+file gets changed notify a service restart task it needs to run 
+
+Ex: 
+handlers: 
+   -  name: restart nginx 
+      Service: 
+	name: nginx
+	state: restarted 
+
+Plays are ordered sets of tasks to execute against host selections from your inventory
+A playbook is a file containing one or more plays 
+
+tasks: 
+   -  name: install httpd
+      yum: pkg=httpd state=latest 
+   - name: write the apache config file
+      Template: src=/srv/httpd.js dest=/etc/httpd.conf 
+   - name: start httpd
+     service: name=httpd state=started (or restarted)
+
+
+
+site.yml (file): 
+—
+- name: install and start apache
+  hosts: webservers
+  remote_user: vagrant
+  become: yes (note: escalate root permission)
+
+  tasks:
+  -  name: install peel repo
+     yum: name={{item}} state=present
+     with_items: (note: for loop)
+     -  libselinux-python
+     -  libsemanage-python
+
+  - name : test to see if SeLinux is running
+    command: get enforce
+    register: sestatus  
+    changed_when: false
+
+  - name: install apache
+    yum:  name=httpd state=present
+
+  - name:  start apache 
+    service: name=httpd state=start enabled=yes 
+
+
+run the site.yml file: ansible-playbook -I hosts site.yml 
+
+
+
+
+
+
+
+Roles: a packages of closely related Ansible content that can be shared more easily than plays alone 
+site.yml
+roles/
+      common/ (note: against all machines) 
+             files/
+	  templates/
+	  tasks/
+	  handlers/
+	  vars/
+	  defaults/
+	  meta/
+      webservers/
+	  files/
+	  templates/
+	  tasks/
+	  handlers/
+	  vars/
+	  defaults/
+	  meta/
+
+Ansible Galaxy: http://galaxy.ansible.com 
+
+# site.yml
+---
+- hosts: web
+   roles: 
+	- common 
+	- webservers 
+
+
+
+
+
+Creating the Roles Structure:
+$ mkdir roles
+$ cd roles/ 
+$ ansible-galaxy init —help 
+
+$ ansible-galaxy init common (note: create common role) 
+$ ansible-galaxy init apache (note: create apache role) is 
+	
