@@ -6,7 +6,7 @@
 {\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
 {\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
 {\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
-\margl1440\margr1440\vieww33100\viewh19280\viewkind0
+\margl1440\margr1440\vieww16720\viewh13660\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 \ul \ulc0 ad-hoc_commands:\ulnone \
@@ -27,8 +27,7 @@ ansible webservers -i hosts -u vagrant -m yum -a \'93name=httpd state=present\'9
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \ul Variable precedence: \ulnone \
+\ul Variable precedence: \ulnone \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	1.	}Extra vars\
 {\listtext	2.	}task vars (only for the task)\
@@ -48,8 +47,7 @@ ansible webservers -i hosts -u vagrant -m yum -a \'93name=httpd state=present\'9
 {\listtext	16.	}Role defaults \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \ul Variables: \ulnone \
+\ul Variables: \ulnone \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls3\ilvl0\cf0 {\listtext	1.	}file: a directory should exist \
 {\listtext	2.	}yum: a package should be installed\
@@ -135,9 +133,8 @@ run the site.yml file:
 Roles:
 \f0\b0  a packages of closely related Ansible content that can be shared more easily than plays alone 
 \f1\b \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\b0 \cf0 site.yml\
+\f0\b0 site.yml\
 roles/\
       common/ (note: against all machines) \
              files/\
